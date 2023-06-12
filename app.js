@@ -19,6 +19,10 @@ connectDB().then(() => {
   })
 })
 
+app.get("/", (req,res)=>{
+  res.send("YOU ARE CONNECTED TO ELECTRON-SERVER")
+})
+
 app.use("/api", apiRoutes);
 
 app.use(async (req, res, next) => {
