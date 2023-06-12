@@ -3,7 +3,7 @@ const createError = require("http-errors");
 const apiRoutes = require("./routes/apiRoutes");
 const morgan = require("morgan");
 require("dotenv").config();
-require("./helper/connectMongo");
+const connectDB = require("./helper/connectMongo");
 
 const app = express();
 app.use(morgan("dev"));
@@ -12,7 +12,12 @@ app.use(express.urlencoded({extended: true}))
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}.`));
+// app.listen(PORT, () => console.log(`Server is running on port ${PORT}.`));
+connectDB().then(() => {
+  app.listen(PORT, () => {
+      console.log(`listening for requests at port ${PORT}`);
+  })
+})
 
 app.use("/api", apiRoutes);
 
